@@ -646,7 +646,7 @@ impl fmt::Display for Value {
 
 /// Possible binary operations in wasm
 #[allow(missing_docs)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Debug, Hash)]
 pub enum BinaryOp {
     I32Eq,
     I32Ne,
@@ -886,7 +886,7 @@ pub enum BinaryOp {
 
 /// Possible unary operations in wasm
 #[allow(missing_docs)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Debug, Hash)]
 pub enum UnaryOp {
     I32Eqz,
     I32Clz,
