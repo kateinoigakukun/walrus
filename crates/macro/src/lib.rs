@@ -301,6 +301,22 @@ fn create_types(attrs: &[syn::Attribute], variants: &[WalrusVariant]) -> impl qu
         })
         .collect();
 
+    let opcode_fn = {
+        let cases = variants.iter().enumerate().map(|(offset, v)| {
+            let name = &v.syn.ident;
+            quote! { #name => #offset as u64, }
+        });
+        let opcode_doc = format!("Returns the opcode of this instruction");
+        quote! {
+            #[doc=#opcode_doc]
+            pub fn opcode(&self) -> u64 {
+                match self {
+                    #( #cases )*
+                }
+            }
+        }
+    };
+
     let variants: Vec<_> = variants
         .iter()
         .map(|v| {
@@ -323,6 +339,7 @@ fn create_types(attrs: &[syn::Attribute], variants: &[WalrusVariant]) -> impl qu
 
         impl Instr {
             #( #methods )*
+            #opcode_fn
         }
     }
 }
