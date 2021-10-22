@@ -589,7 +589,7 @@ pub enum Instr {
 pub type ShuffleIndices = [u8; 16];
 
 /// Constant values that can show up in WebAssembly
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, PartialEq)]
 pub enum Value {
     /// A constant 32-bit integer
     I32(i32),
