@@ -646,7 +646,7 @@ impl fmt::Display for Value {
 
 /// Possible binary operations in wasm
 #[allow(missing_docs)]
-#[derive(Copy, Clone, Debug, Hash)]
+#[derive(Copy, Clone, Debug, Hash, PartialEq, Eq)]
 pub enum BinaryOp {
     I32Eq,
     I32Ne,
@@ -886,7 +886,7 @@ pub enum BinaryOp {
 
 /// Possible unary operations in wasm
 #[allow(missing_docs)]
-#[derive(Copy, Clone, Debug, Hash)]
+#[derive(Copy, Clone, Debug, Hash, PartialEq, Eq)]
 pub enum UnaryOp {
     I32Eqz,
     I32Clz,
@@ -1039,7 +1039,7 @@ pub enum UnaryOp {
 }
 
 /// The different kinds of load instructions that are part of a `Load` IR node
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 #[allow(missing_docs)]
 pub enum LoadKind {
     // TODO: much of this is probably redundant with type information already
@@ -1087,7 +1087,7 @@ pub enum LoadSimdKind {
 }
 
 /// The kinds of extended loads which can happen
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 #[allow(missing_docs)]
 pub enum ExtendedLoad {
     SignExtend,
@@ -1134,7 +1134,7 @@ impl ExtendedLoad {
 }
 
 /// The different kinds of store instructions that are part of a `Store` IR node
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 #[allow(missing_docs)]
 pub enum StoreKind {
     I32 { atomic: bool },
@@ -1181,7 +1181,7 @@ impl StoreKind {
 
 /// Arguments to memory operations, containing a constant offset from a dynamic
 /// address as well as a predicted alignment.
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct MemArg {
     /// The alignment of the memory operation, must be a power of two
     pub align: u32,
@@ -1190,7 +1190,7 @@ pub struct MemArg {
 }
 
 /// The different kinds of atomic rmw operations
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 #[allow(missing_docs)]
 pub enum AtomicOp {
     Add,
@@ -1202,7 +1202,7 @@ pub enum AtomicOp {
 }
 
 /// The different kinds of atomic rmw operations
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 #[allow(missing_docs)]
 pub enum AtomicWidth {
     I32,
