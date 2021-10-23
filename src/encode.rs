@@ -40,15 +40,13 @@ impl<'data> Encoder<'data> {
         leb128::write::signed(&mut self.dst, val).unwrap();
     }
 
-    pub fn f32(&mut self, val: f32) {
-        let bits = val.to_bits();
+    pub fn f32(&mut self, bits: u32) {
         for i in 0..4 {
             self.byte((bits >> (i * 8)) as u8);
         }
     }
 
-    pub fn f64(&mut self, val: f64) {
-        let bits = val.to_bits();
+    pub fn f64(&mut self, bits: u64) {
         for i in 0..8 {
             self.byte((bits >> (i * 8)) as u8);
         }

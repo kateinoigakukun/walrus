@@ -28,8 +28,8 @@ impl InitExpr {
         let val = match reader.read()? {
             I32Const { value } => InitExpr::Value(Value::I32(value)),
             I64Const { value } => InitExpr::Value(Value::I64(value)),
-            F32Const { value } => InitExpr::Value(Value::F32(f32::from_bits(value.bits()))),
-            F64Const { value } => InitExpr::Value(Value::F64(f64::from_bits(value.bits()))),
+            F32Const { value } => InitExpr::Value(Value::F32(value.bits())),
+            F64Const { value } => InitExpr::Value(Value::F64(value.bits())),
             V128Const { value } => InitExpr::Value(Value::V128(v128_to_u128(&value))),
             GlobalGet { global_index } => InitExpr::Global(ids.get_global(global_index)?),
             RefNull { ty } => InitExpr::RefNull(ValType::parse(&ty)?),

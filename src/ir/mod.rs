@@ -596,9 +596,9 @@ pub enum Value {
     /// A constant 64-bit integer
     I64(i64),
     /// A constant 32-bit float
-    F32(f32),
+    F32(u32),
     /// A constant 64-bit float
-    F64(f64),
+    F64(u64),
     /// A constant 128-bit vector register
     V128(u128),
 }

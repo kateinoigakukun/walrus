@@ -218,13 +218,27 @@ impl InstrSeqBuilder<'_> {
     /// Creates an `f32.const` instruction for the specified value
     #[inline]
     pub fn f32_const(&mut self, val: f32) -> &mut Self {
-        self.const_(Value::F32(val))
+        self.const_(Value::F32(val.to_bits()))
+    }
+
+    /// Creates an `f32.const` instruction for the specified bit pattern
+    /// to have signaling bits
+    #[inline]
+    pub fn f32_const_exact(&mut self, bits: u32) -> &mut Self {
+        self.const_(Value::F32(bits))
     }
 
     /// Creates an `f64.const` instruction for the specified value
     #[inline]
     pub fn f64_const(&mut self, val: f64) -> &mut Self {
-        self.const_(Value::F64(val))
+        self.const_(Value::F64(val.to_bits()))
+    }
+
+    /// Creates an `f64.const` instruction for the specified bit pattern
+    /// to have signaling bits
+    #[inline]
+    pub fn f64_const_exact(&mut self, bits: u64) -> &mut Self {
+        self.const_(Value::F64(bits))
     }
 
     /// Append a new, nested `block ... end` to this builder's sequence.
