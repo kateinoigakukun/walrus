@@ -19,6 +19,7 @@ use wasmparser::{FuncValidator, FunctionBody, ValidatorResources};
 use rayon::prelude::*;
 
 pub use self::local_function::LocalFunction;
+pub use self::local_function::run;
 
 /// A function identifier.
 pub type FunctionId = Id<Function>;
@@ -275,6 +276,7 @@ impl ModuleFunctions {
     }
 
     pub(crate) fn emit_func_section(&self, cx: &mut EmitContext) {
+        use crate::emit::GetItemIndices;
         log::debug!("emit function section");
         let functions = used_local_functions(cx);
         if functions.len() == 0 {

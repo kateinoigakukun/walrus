@@ -1,13 +1,14 @@
-use crate::emit::IdsToIndices;
+use crate::emit::GetItemIndices;
 use crate::encode::Encoder;
 use crate::ir::*;
 use crate::map::IdHashMap;
 use crate::module::functions::LocalFunction;
 use crate::module::memories::MemoryId;
 
-pub(crate) fn run(
+#[allow(missing_docs)]
+pub fn run<Indices: GetItemIndices>(
     func: &LocalFunction,
-    indices: &IdsToIndices,
+    indices: &Indices,
     local_indices: &IdHashMap<Local, u32>,
     encoder: &mut Encoder,
     map: Option<&mut Vec<(InstrLocId, usize)>>,
@@ -26,9 +27,9 @@ pub(crate) fn run(
     debug_assert!(v.block_kinds.is_empty());
 }
 
-struct Emit<'a, 'b> {
+struct Emit<'a, 'b, Indices> {
     // Needed so we can map locals to their indices.
-    indices: &'a IdsToIndices,
+    indices: &'a Indices,
     local_indices: &'a IdHashMap<Local, u32>,
 
     // Stack of blocks that we are currently emitting instructions for. A branch
@@ -49,7 +50,7 @@ struct Emit<'a, 'b> {
     map: Option<&'a mut Vec<(InstrLocId, usize)>>,
 }
 
-impl<'instr> Visitor<'instr> for Emit<'_, '_> {
+impl<'instr, Indices: GetItemIndices> Visitor<'instr> for Emit<'_, '_, Indices> {
     fn start_instr_seq(&mut self, seq: &'instr InstrSeq) {
         self.blocks.push(seq.id());
         debug_assert_eq!(self.blocks.len(), self.block_kinds.len());
@@ -931,7 +932,7 @@ impl<'instr> Visitor<'instr> for Emit<'_, '_> {
     }
 }
 
-impl Emit<'_, '_> {
+impl<Indices: GetItemIndices> Emit<'_, '_, Indices> {
     fn branch_target(&self, block: InstrSeqId) -> u32 {
         self.blocks.iter().rev().position(|b| *b == block).expect(
             "attempt to branch to invalid block; bad transformation pass introduced bad branching?",

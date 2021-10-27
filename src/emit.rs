@@ -35,6 +35,17 @@ impl<'a, T: ?Sized + Emit> Emit for &'a T {
     }
 }
 
+#[allow(missing_docs)]
+pub trait GetItemIndices {
+    fn get_memory_index(&self, id: MemoryId) -> u32;
+    fn get_data_index(&self, id: DataId) -> u32;
+    fn get_func_index(&self, id: FunctionId) -> u32;
+    fn get_type_index(&self, id: TypeId) -> u32;
+    fn get_table_index(&self, id: TableId) -> u32;
+    fn get_global_index(&self, id: GlobalId) -> u32;
+    fn get_element_index(&self, id: ElementId) -> u32;
+}
+
 /// Maps our high-level identifiers to the raw indices they end up emitted at.
 ///
 /// As we lower to raw wasm structures, we cement various constructs' locations
@@ -98,21 +109,51 @@ macro_rules! define_get_push_index {
 }
 
 define_get_push_index! {
-    get_table_index, push_table, TableId, tables;
-    get_type_index, push_type, TypeId, types;
-    get_func_index, push_func, FunctionId, funcs;
-    get_global_index, push_global, GlobalId, globals;
-    get_memory_index, push_memory, MemoryId, memories;
-    get_element_index, push_element, ElementId, elements;
+    _get_table_index, push_table, TableId, tables;
+    _get_type_index, push_type, TypeId, types;
+    _get_func_index, push_func, FunctionId, funcs;
+    _get_global_index, push_global, GlobalId, globals;
+    _get_memory_index, push_memory, MemoryId, memories;
+    _get_element_index, push_element, ElementId, elements;
 }
 define_get_index! {
-    get_data_index, DataId, data;
+    _get_data_index, DataId, data;
 }
 
 impl IdsToIndices {
     /// Sets the data index to the specified value
     pub(crate) fn set_data_index(&mut self, id: DataId, idx: u32) {
         self.data.insert(id, idx);
+    }
+}
+
+impl GetItemIndices for IdsToIndices {
+    fn get_memory_index(&self, id: MemoryId) -> u32 {
+        self._get_memory_index(id)
+    }
+
+    fn get_data_index(&self, id: DataId) -> u32 {
+        self._get_data_index(id)
+    }
+
+    fn get_func_index(&self, id: FunctionId) -> u32 {
+        self._get_func_index(id)
+    }
+
+    fn get_type_index(&self, id: TypeId) -> u32 {
+        self._get_type_index(id)
+    }
+
+    fn get_table_index(&self, id: TableId) -> u32 {
+        self._get_table_index(id)
+    }
+
+    fn get_global_index(&self, id: GlobalId) -> u32 {
+        self._get_global_index(id)
+    }
+
+    fn get_element_index(&self, id: ElementId) -> u32 {
+        self._get_element_index(id)
     }
 }
 

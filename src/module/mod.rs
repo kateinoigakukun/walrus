@@ -28,6 +28,7 @@ pub use crate::module::elements::{Element, ElementId, ModuleElements};
 pub use crate::module::exports::{Export, ExportId, ExportItem, ModuleExports};
 pub use crate::module::functions::{Function, FunctionId, ModuleFunctions};
 pub use crate::module::functions::{FunctionKind, ImportedFunction, LocalFunction};
+pub use crate::module::functions::run;
 pub use crate::module::globals::{Global, GlobalId, GlobalKind, ModuleGlobals};
 pub use crate::module::imports::{Import, ImportId, ImportKind, ModuleImports};
 pub use crate::module::locals::ModuleLocals;
@@ -44,6 +45,7 @@ use std::path::Path;
 use wasmparser::{Parser, Payload, Validator, WasmFeatures};
 
 pub use self::config::ModuleConfig;
+pub use crate::emit::GetItemIndices;
 
 /// A wasm module.
 #[derive(Debug, Default)]

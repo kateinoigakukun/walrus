@@ -13,6 +13,8 @@ use crate::{Data, DataId, FunctionBuilder, FunctionId, MemoryId, Module, Result,
 use std::collections::BTreeMap;
 use wasmparser::{FuncValidator, Operator, ValidatorResources};
 
+pub use emit::run;
+
 /// A function defined locally within the wasm module.
 #[derive(Debug)]
 pub struct LocalFunction {
@@ -167,7 +169,8 @@ impl LocalFunction {
         }
     }
 
-    fn used_locals(&self) -> IdHashSet<Local> {
+    #[allow(missing_docs)]
+    pub fn used_locals(&self) -> IdHashSet<Local> {
         let mut locals = Used::default();
         dfs_in_order(&mut locals, self, self.entry_block());
         return locals.locals;

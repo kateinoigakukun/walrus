@@ -15,6 +15,7 @@ pub struct IdHasher {
     hash: u64,
 }
 
+#[allow(missing_docs)]
 pub type IdHashMap<K, V> = HashMap<Id<K>, V, BuildIdHasher>;
 pub type IdHashSet<T> = HashSet<Id<T>, BuildIdHasher>;
 

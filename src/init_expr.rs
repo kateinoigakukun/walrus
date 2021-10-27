@@ -1,6 +1,6 @@
 //! Handling wasm constant values
 
-use crate::emit::{Emit, EmitContext};
+use crate::emit::{Emit, EmitContext, GetItemIndices};
 use crate::ir::Value;
 use crate::parse::IndicesToIds;
 use crate::ValType;

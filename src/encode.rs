@@ -1,10 +1,12 @@
 pub const MAX_U32_LENGTH: usize = 5;
 
+#[allow(missing_docs)]
 #[derive(Debug)]
 pub struct Encoder<'a> {
     dst: &'a mut Vec<u8>,
 }
 
+#[allow(missing_docs)]
 impl<'data> Encoder<'data> {
     pub fn new(dst: &'data mut Vec<u8>) -> Encoder<'data> {
         Encoder { dst }
